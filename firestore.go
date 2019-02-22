@@ -41,7 +41,7 @@ type FireStoreStringValue struct {
 func FirestoreTrigger(ctx context.Context, e FirestoreEvent) error {
 	fav := parseEvent(&e)
 
-	b, _ := json.Marshal(fav)
+	b, _ := json.Marshal([]*c9r.Favorite{fav})
 	req := &pubsub.PublishRequest{
 		Topic:    fmt.Sprintf("projects/%s/topics/%s", projectID, topic),
 		Messages: []*pubsub.PubsubMessage{{Data: b}},
