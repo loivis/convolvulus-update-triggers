@@ -12,6 +12,7 @@ func main() {
 		Value: convvls.FirestoreValue{
 			Fields: convvls.FireStoreData{
 				Author: convvls.FireStoreStringValue{StringValue: "foo"},
+				BookID: convvls.FireStoreStringValue{StringValue: "123"},
 				Site:   convvls.FireStoreStringValue{StringValue: "bar"},
 				Title:  convvls.FireStoreStringValue{StringValue: "baz"},
 			},

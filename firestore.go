@@ -30,6 +30,7 @@ type FirestoreValue struct {
 
 type FireStoreData struct {
 	Author FireStoreStringValue
+	BookID FireStoreStringValue
 	Site   FireStoreStringValue
 	Title  FireStoreStringValue
 }
@@ -64,6 +65,7 @@ func parseEvent(e *FirestoreEvent) *c9r.Favorite {
 	case e.Value.Fields.Author.StringValue != "":
 		fav = &c9r.Favorite{
 			Author: e.Value.Fields.Author.StringValue,
+			BookID: e.Value.Fields.BookID.StringValue,
 			Site:   e.Value.Fields.Site.StringValue,
 			Title:  e.Value.Fields.Title.StringValue,
 		}
@@ -71,6 +73,7 @@ func parseEvent(e *FirestoreEvent) *c9r.Favorite {
 	case e.OldValue.Fields.Author.StringValue != "":
 		fav = &c9r.Favorite{
 			Author: e.OldValue.Fields.Author.StringValue,
+			BookID: e.OldValue.Fields.BookID.StringValue,
 			Site:   e.OldValue.Fields.Site.StringValue,
 			Title:  e.OldValue.Fields.Title.StringValue,
 		}
