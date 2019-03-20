@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/loivis/convolvulus-update-triggers/c9r"
+	"github.com/loivis/convolvulus-update-triggers/triggers"
 	"google.golang.org/genproto/googleapis/pubsub/v1"
 )
 
@@ -42,7 +42,7 @@ type FireStoreStringValue struct {
 func FirestoreTrigger(ctx context.Context, e FirestoreEvent) error {
 	fav := parseEvent(&e)
 
-	b, _ := json.Marshal([]*c9r.Favorite{fav})
+	b, _ := json.Marshal([]*triggers.Favorite{fav})
 	req := &pubsub.PublishRequest{
 		Topic:    fmt.Sprintf("projects/%s/topics/%s", projectID, topic),
 		Messages: []*pubsub.PubsubMessage{{Data: b}},
@@ -58,12 +58,12 @@ func FirestoreTrigger(ctx context.Context, e FirestoreEvent) error {
 	return nil
 }
 
-func parseEvent(e *FirestoreEvent) *c9r.Favorite {
-	var fav *c9r.Favorite
+func parseEvent(e *FirestoreEvent) *triggers.Favorite {
+	var fav *triggers.Favorite
 
 	switch {
 	case e.Value.Fields.Author.StringValue != "":
-		fav = &c9r.Favorite{
+		fav = &triggers.Favorite{
 			Author: e.Value.Fields.Author.StringValue,
 			BookID: e.Value.Fields.BookID.StringValue,
 			Site:   e.Value.Fields.Site.StringValue,
@@ -71,7 +71,7 @@ func parseEvent(e *FirestoreEvent) *c9r.Favorite {
 		}
 	// this never happens in case of firestore create
 	case e.OldValue.Fields.Author.StringValue != "":
-		fav = &c9r.Favorite{
+		fav = &triggers.Favorite{
 			Author: e.OldValue.Fields.Author.StringValue,
 			BookID: e.OldValue.Fields.BookID.StringValue,
 			Site:   e.OldValue.Fields.Site.StringValue,

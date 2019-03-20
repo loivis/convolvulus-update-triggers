@@ -1,4 +1,4 @@
-package c9r
+package triggers
 
 type Favorite struct {
 	Author string `json:"author,omitempty" firestore:"author"`
